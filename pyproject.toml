@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "volta-t2iopt"
+version = "0.1.0"
+description = "Precision-porting toolkit: run bf16-native text-to-image diffusion models on pre-Ampere GPUs (Volta/Turing) with fp16 tensor cores"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "torch>=2.0",
+    "numpy>=1.26",
+    "diffusers>=0.30",
+    "transformers>=4.44",
+    "pillow>=10.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+volta-t2iopt = "volta_t2iopt.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["volta_t2iopt*"]
+
+[tool.setuptools.package-data]
+volta_t2iopt = ["presets/*.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"

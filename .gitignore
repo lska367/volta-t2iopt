@@ -1,7 +1,18 @@
+# 环境
 .venv/
+venv/
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
 
-# 大件产物（需要入库时手动 git add -f）
-# t2i/out/traces/
+# 实验产物（图 / JSON / chrome trace）。本地保留、不入库：
+#   results/ 由 volta-t2iopt 默认写入（可用 VOLTA_T2IOPT_OUT 改）
+results/
+*.latent.pt
+
+# 模型权重只放 ~/models，不进仓库
+*.safetensors
+*.ckpt

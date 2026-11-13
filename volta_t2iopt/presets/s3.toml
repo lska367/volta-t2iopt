@@ -1,0 +1,21 @@
+# S3 消融档：GEMM + attention 走 fp16，VAE 仍是 bf16。
+# 当年 1024²/9 步 = 46.4 s（4.92×）。
+[meta]
+name = "s3"
+notes = ["消融档：GEMM + attention 都走 fp16，VAE 仍 bf16（VAE 只占 2.3%，留着看它的真实份额）"]
+
+[model]
+dtype = "bfloat16"
+decoder_dtype = "bfloat16"
+
+[passes.hybrid_linear]
+enabled = true
+prescale = true
+out_limit = 50000.0
+k_max = 20
+
+[passes.attn_fp16]
+enabled = true
+
+[passes.decoder_fp16]
+enabled = false

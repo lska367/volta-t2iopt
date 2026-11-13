@@ -1,0 +1,17 @@
+# 基线：什么都不做。用于 A/B 对照（相当于以前 T2I_HYBRID=0 T2I_FP16_ATTN=0）。
+[meta]
+name = "noop"
+notes = ["纯基线：保持模型原生精度，不做任何 patch"]
+
+[model]
+dtype = "bfloat16"
+decoder_dtype = "bfloat16"
+
+[passes.hybrid_linear]
+enabled = false
+
+[passes.attn_fp16]
+enabled = false
+
+[passes.decoder_fp16]
+enabled = false

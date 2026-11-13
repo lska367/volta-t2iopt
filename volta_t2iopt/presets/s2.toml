@@ -1,0 +1,21 @@
+# S2 消融档：只把 GEMM 换成 fp16 张量核（attention / VAE 保持 bf16）。
+# 当年 1024²/9 步 = 76.7 s（基线 228.4 s，2.98×）。保留它是为了让"瓶颈迁移"这条线可复现。
+[meta]
+name = "s2"
+notes = ["消融档：只换 GEMM，用来对比 attention 与 VAE 各自的收益"]
+
+[model]
+dtype = "bfloat16"
+decoder_dtype = "bfloat16"
+
+[passes.hybrid_linear]
+enabled = true
+prescale = true
+out_limit = 50000.0
+k_max = 20
+
+[passes.attn_fp16]
+enabled = false
+
+[passes.decoder_fp16]
+enabled = false

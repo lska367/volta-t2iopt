@@ -1,0 +1,24 @@
+# V100 / Tesla (sm_70) 上的实测最优配置。
+# 等价于 auto 在这张卡上推出的结果，写成文件是为了能 diff、能在别的卡上做对照实验。
+[meta]
+name = "v100_sm70"
+notes = [
+  "Volta 只有 fp16 张量核（无 bf16），bf16-native 模型必须迁到 fp16 才有算力",
+  "GEMM 必须带在线预缩放：激活 |max| 随分辨率/步数/提示词变化，静态 k 表会溢出",
+]
+
+[model]
+dtype = "bfloat16"        # 模型磁盘/原生精度
+decoder_dtype = "float16" # VAE 解码：5.26 s -> 1.02 s，对 bf16 SSIM 0.99966
+
+[passes.hybrid_linear]
+enabled = true
+prescale = true
+out_limit = 50000.0
+k_max = 20
+
+[passes.attn_fp16]
+enabled = true
+
+[passes.decoder_fp16]
+enabled = true
