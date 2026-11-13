@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# 大件产物（需要入库时手动 git add -f）
+# t2i/out/traces/
